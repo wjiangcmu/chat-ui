@@ -1,5 +1,5 @@
 {
-	"buildEnvironment": {
+	"env": {
 		"SKIP_LLAMA_CPP_BUILD": "true"
 	}
 }
