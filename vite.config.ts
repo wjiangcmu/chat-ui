@@ -20,10 +20,7 @@ function loadTTFAsArrayBuffer() {
 		},
 	};
 }
-const isViteNode = process.argv.some((arg) => arg.includes("vite-node")) || !!process.env.VITE_NODE;
-const skipLlamaCppBuild = process.env.SKIP_LLAMA_CPP_BUILD === "true";
-const shouldCopyLlama =
-	process.env.npm_lifecycle_event === "build" && !isViteNode && !skipLlamaCppBuild; // Copy node-llama-cpp/llama files to build output
+const shouldCopyLlama = false; // Disable llama copy completely
 
 function copyLlamaFiles() {
 	return {
@@ -93,6 +90,11 @@ export default defineConfig({
 	],
 	optimizeDeps: {
 		include: ["uuid", "@huggingface/transformers", "sharp", "@gradio/client", "clsx"],
+		exclude: ["node-llama-cpp"],
+	},
+	ssr: {
+		noExternal: true,
+		external: ["node-llama-cpp"],
 	},
 	test: {
 		workspace: [
